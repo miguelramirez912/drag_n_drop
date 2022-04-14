@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1 class="main-title">Kaban Board</h1>
+    <div class="drag-container">
+        <ul class="drag-list">
+            <!-- backlog column -->
+            <li class="drag-column backlog-column">
+                <!-- backlog column title -->
+                <span class="header">
+                    <h1>Pendientes</h1>
+                </span>
+                <!-- backlog column content -->
+                <div id="backlog-content" class="custom-scroll">
+                    <ul class="drag-item-list" id="backlog-list" ondragover="allowDrop(event)" ondragenter="dragEnter(0)" ondrop="drop(event)">
+                    </ul>
+                </div>
+                <!-- backlog column add buttons -->
+                <div class="add-btn-group">
+                    <div class="add-btn" onclick="showInputBox(0)">
+                        <span class="plus-sign">+</span>
+                        <span>Agregar</span>
+                    </div>
+                    <div class="add-btn solid" onclick="hideInputBox(0)">
+                        <span>Guardar</span>
+                    </div>
+                </div>
+                <!-- backlog column add container -->
+                <div class="add-container">
+                    <div class="add-item" contenteditable="true"></div>
+                </div>
+            </li>
+
+            <li class="drag-column progress-column">
+                <!-- progress column title -->
+                <span class="header">
+                    <h1>En Progreso</h1>
+                </span>
+                <!-- progress column content -->
+                <div id="progress-content" class="custom-scroll">
+                    <ul class="drag-item-list" id="progress-list" ondragover="allowDrop(event)" ondragenter="dragEnter(1)" ondrop="drop(event)">
+                    </ul>
+                </div>
+                <!-- progress column add buttons -->
+                <div class="add-btn-group">
+                    <div class="add-btn" onclick="showInputBox(1)">
+                        <span class="plus-sign">+</span>
+                        <span>Agregar</span>
+                    </div>
+                    <div class="add-btn solid" onclick="hideInputBox(1)">
+                        <span>Guardar</span>
+                    </div>
+                </div>
+                <!-- progress column add container -->
+                <div class="add-container">
+                    <div class="add-item" contenteditable="true"></div>
+                </div>
+            </li>
+
+            <li class="drag-column complete-column">
+                <!-- complete column title -->
+                <span class="header">
+                    <h1>Completados</h1>
+                </span>
+                <!-- complete column content -->
+                <div id="complete-content" class="custom-scroll">
+                    <ul class="drag-item-list" id="complete-list" ondragover="allowDrop(event)" ondragenter="dragEnter(2)" ondrop="drop(event)">
+                    </ul>
+                </div>
+                <!-- complete column add buttons -->
+                <div class="add-btn-group">
+                    <div class="add-btn" onclick="showInputBox(2)">
+                        <span class="plus-sign">+</span>
+                        <span>Agregar</span>
+                    </div>
+                    <div class="add-btn solid" onclick="hideInputBox(2)">
+                        <span>Guardar</span>
+                    </div>
+                </div>
+                <!-- complete column add container -->
+                <div class="add-container">
+                    <div class="add-item" contenteditable="true"></div>
+                </div>
+            </li>
+
+            <li class="drag-column on-hold-column">
+                <!-- on-hold column title -->
+                <span class="header">
+                    <h1>En Espera</h1>
+                </span>
+                <!-- on-hold column content -->
+                <div id="on-hold-content" class="custom-scroll">
+                    <ul class="drag-item-list" id="on-hold-list" ondragover="allowDrop(event)" ondragenter="dragEnter(3)" ondrop="drop(event)">
+                    </ul>
+                </div>
+                <!-- on-hold column add buttons -->
+                <div class="add-btn-group">
+                    <div class="add-btn" onclick="showInputBox(3)">
+                        <span class="plus-sign">+</span>
+                        <span>Agregar</span>
+                    </div>
+                    <div class="add-btn solid" onclick="hideInputBox(3)">
+                        <span>Guardar</span>
+                    </div>
+                </div>
+                <!-- on-hold column add container -->
+                <div class="add-container">
+                    <div class="add-item" contenteditable="true"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
