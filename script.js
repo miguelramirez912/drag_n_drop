@@ -2,6 +2,11 @@ const addBtns = document.querySelectorAll('.add-btn:not(.solid)');
 const saveItemBtns = document.querySelectorAll('.solid');
 const addItemContainers = document.querySelectorAll('.add-container');
 const addItems = document.querySelectorAll('.add-item');
+// const cancelBtns = document.querySelectorAll('.cancel-btn');
+
+// console.log(saveItemBtns);
+// console.log(cancelBtns);
+
 
 // List Item
 const listColumns = document.querySelectorAll('.drag-item-list');
@@ -62,9 +67,26 @@ function updateItem(column, index) {
 };
 // Edit Item until it gets clicked
 function editItem(column, index) {
+    console.log("editItem lanzado");
     const selectedColumnEl = listColumns[column].children;
     const currentItem = selectedColumnEl[index];
     currentItem.setAttribute('contentEditable', 'true');
+}
+
+function deleteItem(column, index) {
+    console.log("deleteItem lanzado");
+    event.stopPropagation();
+    console.log("Deteniendo propagacion");
+    console.log(`Elemento ubicado en la columna: ${column}, indice: ${index}`);
+    const selectedArray = listArrays[column];
+    console.log(selectedArray);
+    console.log(selectedArray[index]);
+    // delete selectedArray[index];
+    //window.confirm(`Esta seguro de eliminar la tarea: ${selectedArray[index]}`);
+    if (window.confirm(`Esta seguro de eliminar la tarea: ${selectedArray[index]}`)) {
+        selectedArray.splice(index, 1);
+        updateDOM();
+    } 
 }
 // Create DOM element for each list item
 function createItemEl(columnEl, column, item, index) {
@@ -77,8 +99,21 @@ function createItemEl(columnEl, column, item, index) {
     // listEl.contentEditable = true;
     listEl.setAttribute('onclick', `editItem(${column}, ${index})`)
     listEl.setAttribute('onfocusout', `updateItem(${column}, ${index})`);
-    // Append
+    const deleteButton = document.createElement('i');
+    //<i class="fa-solid fa-trash"></i>
+    deleteButton.classList.add("fa-solid");
+    deleteButton.classList.add("fa-trash");
+    deleteButton.setAttribute('onclick', `deleteItem(${column}, ${index})`);
+    listEl.addEventListener('mouseover', () => {
+        listEl.appendChild(deleteButton);
+    });
+    listEl.addEventListener('mouseout', () => {
+        if(deleteButton){
+            deleteButton.remove();
+        }
+    })
     columnEl.appendChild(listEl);
+
 };
 //Filter empty items from arrays
 function filterArray(array) {
@@ -134,12 +169,17 @@ function showInputBox(column) {
     addBtns[column].style.visibility = 'hidden';
     saveItemBtns[column].style.display = 'flex';
     addItemContainers[column].style.display = 'flex';
+    // cancelBtns[column].style.display = 'flex';
+    
 };
 // Hide Input Box
 function hideInputBox(column) {
+    console.log(event.target.textContent);
     addBtns[column].style.visibility = 'visible';
     saveItemBtns[column].style.display = 'none';
     addItemContainers[column].style.display = 'none';
+    // cancelBtns[column].style.display = 'none';
+
     addToColumn(column);
 };
 // Rebuild Arrays
