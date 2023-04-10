@@ -83,11 +83,20 @@ ul {
   height: fit-content;
   letter-spacing: 1px;
   cursor: pointer;
+  position: relative;
 }
 .drag-item:focus {
   background-color: white;
   color: black;
   outline: none;
+}
+
+.drag-item .fa-trash{
+  color: #a22d22;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 /* column add group */
 
@@ -115,6 +124,10 @@ ul {
 .add-btn:active {
   transform: scale(0.97);
 }
+
+/* .cancel-btn{
+  background-color: red;
+} */
 .solid {
   display: none;
 }
@@ -149,7 +162,7 @@ ul {
   border-radius: 10px;
   color: black;
   resize: none;
-  /* padding: 10px; */
+  padding: 10px;
 }
 
 /* column colors */
