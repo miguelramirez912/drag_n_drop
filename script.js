@@ -1,14 +1,10 @@
 const addBtns = document.querySelectorAll('.add-btn:not(.solid)');
-const saveItemBtns = document.querySelectorAll('.solid');
+const saveItemBtns = document.querySelectorAll('.save-btn');
 const addItemContainers = document.querySelectorAll('.add-container');
 const addItems = document.querySelectorAll('.add-item');
-// const cancelBtns = document.querySelectorAll('.cancel-btn');
+const cancelBtns = document.querySelectorAll('.cancel-btn');
 
-// console.log(saveItemBtns);
-// console.log(cancelBtns);
-
-
-// List Item
+// Lists
 const listColumns = document.querySelectorAll('.drag-item-list');
 const backlogList = document.querySelector('#backlog-list');
 const progressList = document.querySelector('#progress-list');
@@ -81,8 +77,6 @@ function deleteItem(column, index) {
     const selectedArray = listArrays[column];
     console.log(selectedArray);
     console.log(selectedArray[index]);
-    // delete selectedArray[index];
-    //window.confirm(`Esta seguro de eliminar la tarea: ${selectedArray[index]}`);
     if (window.confirm(`Esta seguro de eliminar la tarea: ${selectedArray[index]}`)) {
         selectedArray.splice(index, 1);
         updateDOM();
@@ -96,21 +90,19 @@ function createItemEl(columnEl, column, item, index) {
     listEl.classList.add('drag-item');
     listEl.draggable = true;
     listEl.setAttribute('ondragstart', 'drag(event)');
-    // listEl.contentEditable = true;
     listEl.setAttribute('onclick', `editItem(${column}, ${index})`)
     listEl.setAttribute('onfocusout', `updateItem(${column}, ${index})`);
     const deleteButton = document.createElement('i');
-    //<i class="fa-solid fa-trash"></i>
-    deleteButton.classList.add("fa-solid");
-    deleteButton.classList.add("fa-trash");
     deleteButton.setAttribute('onclick', `deleteItem(${column}, ${index})`);
+    
+    listEl.appendChild(deleteButton);
     listEl.addEventListener('mouseover', () => {
-        listEl.appendChild(deleteButton);
+        deleteButton.classList.add("fa-solid");
+        deleteButton.classList.add("fa-trash");
     });
     listEl.addEventListener('mouseout', () => {
-        if(deleteButton){
-            deleteButton.remove();
-        }
+        deleteButton.classList.remove("fa-solid");
+        deleteButton.classList.remove("fa-trash");
     })
     columnEl.appendChild(listEl);
 
@@ -161,31 +153,29 @@ function addToColumn(column) {
     const textItem = addItems[column].textContent;
     const selectedArray = listArrays[column];
     selectedArray.push(textItem);
-    addItems[column].textContent = '';
+    // addItems[column].textContent = '';
+    hideInputBox(column);
     updateDOM();
 }
 // Show Input Box
 function showInputBox(column) {
-    addBtns[column].style.visibility = 'hidden';
+    addBtns[column].style.display = 'none';
     saveItemBtns[column].style.display = 'flex';
     addItemContainers[column].style.display = 'flex';
-    // cancelBtns[column].style.display = 'flex';
-    
+    cancelBtns[column].style.display = 'flex';
+    addItems[column].focus();
 };
 // Hide Input Box
 function hideInputBox(column) {
-    console.log(event.target.textContent);
-    addBtns[column].style.visibility = 'visible';
+    addBtns[column].style.display = 'flex';
     saveItemBtns[column].style.display = 'none';
     addItemContainers[column].style.display = 'none';
-    // cancelBtns[column].style.display = 'none';
-
-    addToColumn(column);
+    console.log(cancelBtns[column])
+    cancelBtns[column].style.display = 'none';
+    addItems[column].textContent = '';
 };
 // Rebuild Arrays
 function rebuildArrays() {
-    console.log(backlogList.children);
-    console.log(progressList.children);
     backlogListArray = [];
     for (let i = 0; i < backlogList.children.length; i++){
         backlogListArray.push(backlogList.children[i].textContent)
